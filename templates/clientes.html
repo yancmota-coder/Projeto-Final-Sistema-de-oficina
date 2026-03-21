@@ -1,0 +1,20 @@
+<h1>Clientes</h1>
+
+<a href="/clientes/novo">Novo Cliente</a>
+
+<ul>
+{% for c in clientes %}
+<li>
+{{c.nome}} - {{c.telefone}}
+
+{% if c.marca %}
+<br>🚗 {{c.marca}} - {{c.modelo}}
+{% endif %}
+
+<a href="/clientes/editar/{{c.id}}">Editar</a>
+<a href="/clientes/deletar/{{c.id}}">Excluir</a>
+<a href="/clientes/{{c.id}}/veiculos/novo">Adicionar Veículo</a>
+
+</li>
+{% endfor %}
+</ul>
