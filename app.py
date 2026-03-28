@@ -14,8 +14,8 @@ def teste_db():
         conn = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="sua_senha",
-            database="seu_banco"
+            password="12345",
+            database="oficina"
         )
 
         if conn.is_connected():
