@@ -1,0 +1,15 @@
+<h1>Mecânicos</h1>
+
+<a href="/mecanicos/novo">Novo Mecânico</a>
+
+<ul>
+{% for m in mecanicos %}
+<li>
+{{m.nome}} - {{m.especialidade}}
+
+<a href="/mecanicos/editar/{{m.id}}">Editar</a>
+<a href="/mecanicos/deletar/{{m.id}}">Excluir</a>
+
+</li>
+{% endfor %}
+</ul>

@@ -1,0 +1,19 @@
+<h1>Peças</h1>
+
+<a href="/pecas/novo">Nova Peça</a>
+
+<ul>
+{% for p in pecas %}
+<li>
+{{p.nome}} - {{p.quantidade_estoque}} unidades - R$ {{p.preco_venda}}
+
+<a href="/pecas/editar/{{p.id}}">Editar</a>
+<a href="/pecas/deletar/{{p.id}}">Excluir</a>
+
+{% if p.quantidade_estoque <= 5 %}
+⚠️ Estoque baixo
+{% endif %}
+
+</li>
+{% endfor %}
+</ul>

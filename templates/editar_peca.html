@@ -1,0 +1,12 @@
+<h1>Editar Peça</h1>
+
+<form action="/pecas/atualizar/{{peca.id}}" method="post">
+
+<input name="nome" value="{{peca.nome}}">
+<input name="codigo" value="{{peca.codigo}}">
+<input name="quantidade_estoque" value="{{peca.quantidade_estoque}}">
+<input name="preco_venda" value="{{peca.preco_venda}}">
+
+<button>Atualizar</button>
+
+</form>
