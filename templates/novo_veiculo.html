@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Novo Veículo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+        }
+
+        .card {
+            border-radius: 15px;
+        }
+
+        .container-box {
+            max-width: 500px;
+            margin: auto;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="container-box">
+        <div class="card bg-dark p-4">
+
+            <h2 class="text-center mb-4">🚗 Novo Veículo</h2>
+
+            <form action="/veiculos/criar" method="post">
+
+                <input type="hidden" name="cliente_id" value="{{cliente_id}}">
+
+                <div class="mb-3">
+                    <label>Marca</label>
+                    <input class="form-control" name="marca" placeholder="Ex: Toyota, Honda..." required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Modelo</label>
+                    <input class="form-control" name="modelo" placeholder="Ex: Corolla, Civic..." required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Placa</label>
+                    <input class="form-control" name="placa" placeholder="ABC-1234" required>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="/clientes" class="btn btn-secondary">⬅ Voltar</a>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
