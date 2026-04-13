@@ -263,5 +263,64 @@ def deletar_peca(id):
 
     return redirect("/pecas")
 
+
+@app.route("/os")
+def listar_os():
+    conn = conectar()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT os.*, c.nome as cliente_nome, v.modelo as veiculo_modelo, m.nome as mecanico_nome
+        FROM ordens_servico os
+        JOIN clientes c ON os.cliente_id = c.id
+        JOIN veiculos v ON os.veiculo_id = v.id
+        JOIN mecanicos m ON os.mecanico_id = m.id
+    """)
+
+    ordens = cursor.fetchall()
+
+    return render_template("os.html", ordens=ordens)
+
+@app.route("/os/nova")
+def nova_os():
+    conn = conectar()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM clientes")
+    clientes = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM veiculos")
+    veiculos = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM mecanicos")
+    mecanicos = cursor.fetchall()
+
+    return render_template(
+        "nova_os.html",
+        clientes=clientes,
+        veiculos=veiculos,
+        mecanicos=mecanicos
+    )
+
+@app.route("/os/criar", methods=["POST"])
+def criar_os():
+    cliente_id = request.form["cliente_id"]
+    veiculo_id = request.form["veiculo_id"]
+    mecanico_id = request.form["mecanico_id"]
+    problema = request.form["problema"]
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO ordens_servico 
+        (cliente_id, veiculo_id, mecanico_id, status, problema_relatado)
+        VALUES (%s, %s, %s, %s, %s)
+    """, (cliente_id, veiculo_id, mecanico_id, "ABERTA", problema))
+
+    conn.commit()
+
+    return redirect("/os")
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,18 @@
+<h1>Ordens de Serviço</h1>
+
+<a href="/os/nova">Nova OS</a>
+
+<ul>
+{% for os in ordens %}
+<li>
+Cliente: {{os.cliente_nome}} |
+Veículo: {{os.veiculo_modelo}} |
+Mecânico: {{os.mecanico_nome}} |
+Status: {{os.status}}
+
+<br>
+Problema: {{os.problema_relatado}}
+
+</li>
+{% endfor %}
+</ul>

@@ -1,0 +1,27 @@
+<h1>Nova Ordem de Serviço</h1>
+
+<form action="/os/criar" method="post">
+
+<select name="cliente_id">
+{% for c in clientes %}
+<option value="{{c.id}}">{{c.nome}}</option>
+{% endfor %}
+</select>
+
+<select name="veiculo_id">
+{% for v in veiculos %}
+<option value="{{v.id}}">{{v.modelo}} - {{v.placa}}</option>
+{% endfor %}
+</select>
+
+<select name="mecanico_id">
+{% for m in mecanicos %}
+<option value="{{m.id}}">{{m.nome}}</option>
+{% endfor %}
+</select>
+
+<textarea name="problema" placeholder="Problema relatado"></textarea>
+
+<button>Criar OS</button>
+
+</form>
