@@ -1,0 +1,9 @@
+<h1>Estoque Baixo</h1>
+
+<ul>
+{% for p in pecas %}
+<li>
+{{p.nome}} - {{p.quantidade_estoque}} unidades
+</li>
+{% endfor %}
+</ul>

@@ -409,5 +409,52 @@ def add_servico(id):
 
     return redirect(f"/os/{id}")
 
+@app.route("/relatorios/os-abertas")
+def os_abertas():
+    conn = conectar()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT os.*, c.nome as cliente, v.modelo as veiculo
+        FROM ordens_servico os
+        JOIN clientes c ON os.cliente_id = c.id
+        JOIN veiculos v ON os.veiculo_id = v.id
+        WHERE os.status = 'ABERTA'
+    """)
+
+    ordens = cursor.fetchall()
+
+    return render_template("relatorio_os_abertas.html", ordens=ordens)
+
+@app.route("/relatorios/estoque-baixo")
+def estoque_baixo():
+    conn = conectar()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT * FROM pecas
+        WHERE quantidade_estoque <= 5
+    """)
+
+    pecas = cursor.fetchall()
+
+    return render_template("relatorio_estoque.html", pecas=pecas)
+
+@app.route("/relatorios/os-concluidas")
+def os_concluidas():
+    conn = conectar()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT os.*, c.nome as cliente
+        FROM ordens_servico os
+        JOIN clientes c ON os.cliente_id = c.id
+        WHERE os.status = 'CONCLUIDA'
+    """)
+
+    ordens = cursor.fetchall()
+
+    return render_template("relatorio_concluidas.html", ordens=ordens)
+
 if __name__ == "__main__":
     app.run(debug=True)

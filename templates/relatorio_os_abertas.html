@@ -1,0 +1,11 @@
+<h1>OS Abertas</h1>
+
+<ul>
+{% for os in ordens %}
+<li>
+Cliente: {{os.cliente}} |
+Veículo: {{os.veiculo}} |
+Status: {{os.status}}
+</li>
+{% endfor %}
+</ul>
