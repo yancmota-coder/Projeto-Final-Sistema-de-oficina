@@ -1,0 +1,39 @@
+<h1>OS #{{os.id}}</h1>
+
+<p><b>Cliente:</b> {{os.cliente}}</p>
+<p><b>Veículo:</b> {{os.veiculo}}</p>
+<p><b>Mecânico:</b> {{os.mecanico}}</p>
+
+<h2>Itens</h2>
+
+<ul>
+{% for i in itens %}
+<li>
+{{i.descricao}} - {{i.quantidade}}x - R$ {{i.valor_total}}
+</li>
+{% endfor %}
+</ul>
+
+<h2>Adicionar Peça</h2>
+
+<form action="/os/{{os.id}}/add-peca" method="post">
+<select name="peca_id">
+{% for p in pecas %}
+<option value="{{p.id}}">
+{{p.nome}} ({{p.quantidade_estoque}})
+</option>
+{% endfor %}
+</select>
+
+<input name="quantidade" placeholder="Quantidade">
+<button>Adicionar Peça</button>
+</form>
+
+<h2>Adicionar Serviço</h2>
+<h2>Total: R$ {{total}}</h2>
+
+<form action="/os/{{os.id}}/add-servico" method="post">
+<input name="descricao" placeholder="Descrição">
+<input name="valor" placeholder="Valor">
+<button>Adicionar Serviço</button>
+</form>

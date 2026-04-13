@@ -322,5 +322,92 @@ def criar_os():
 
     return redirect("/os")
 
+@app.route("/os/<int:id>")
+def ver_os(id):
+    conn = conectar()
+    cursor = conn.cursor(dictionary=True)
+
+    # dados da OS
+    cursor.execute("""
+        SELECT os.*, c.nome as cliente, v.modelo as veiculo, m.nome as mecanico
+        FROM ordens_servico os
+        JOIN clientes c ON os.cliente_id = c.id
+        JOIN veiculos v ON os.veiculo_id = v.id
+        JOIN mecanicos m ON os.mecanico_id = m.id
+        WHERE os.id = %s
+    """, (id,))
+    os = cursor.fetchone()
+
+    # itens da OS
+    cursor.execute("SELECT * FROM os_itens WHERE os_id=%s", (id,))
+    itens = cursor.fetchall()
+
+    # peças disponíveis
+    cursor.execute("SELECT * FROM pecas")
+    pecas = cursor.fetchall()
+
+    cursor.execute("""
+    SELECT SUM(valor_total) as total
+    FROM os_itens
+    WHERE os_id=%s
+    """, (id,))
+    total = cursor.fetchone()["total"] or 0
+
+    return render_template("ver_os.html", os=os, itens=itens, pecas=pecas, total=total)
+
+@app.route("/os/<int:id>/add-peca", methods=["POST"])
+def add_peca(id):
+    peca_id = request.form["peca_id"]
+    quantidade = int(request.form["quantidade"])
+
+    conn = conectar()
+    cursor = conn.cursor(dictionary=True)
+
+    # pegar peça
+    cursor.execute("SELECT * FROM pecas WHERE id=%s", (peca_id,))
+    peca = cursor.fetchone()
+
+    valor_unitario = peca["preco_venda"]
+    valor_total = valor_unitario * quantidade
+
+    # inserir item
+    cursor.execute("""
+        INSERT INTO os_itens
+        (os_id, peca_id, descricao, tipo, quantidade, valor_unitario, valor_total)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (
+        id, peca_id, peca["nome"], "PECA",
+        quantidade, valor_unitario, valor_total
+    ))
+
+    # 🔥 REDUZ ESTOQUE
+    cursor.execute("""
+        UPDATE pecas
+        SET quantidade_estoque = quantidade_estoque - %s
+        WHERE id = %s
+    """, (quantidade, peca_id))
+
+    conn.commit()
+
+    return redirect(f"/os/{id}")
+
+@app.route("/os/<int:id>/add-servico", methods=["POST"])
+def add_servico(id):
+    descricao = request.form["descricao"]
+    valor = float(request.form["valor"])
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO os_itens
+        (os_id, descricao, tipo, quantidade, valor_unitario, valor_total)
+        VALUES (%s, %s, %s, %s, %s, %s)
+    """, (id, descricao, "SERVICO", 1, valor, valor))
+
+    conn.commit()
+
+    return redirect(f"/os/{id}")
+
 if __name__ == "__main__":
     app.run(debug=True)
