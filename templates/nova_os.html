@@ -16,10 +16,11 @@
             border-radius: 15px;
         }
 
-        .container-box {
-            max-width: 600px;
-            margin: auto;
-            margin-top: 60px;
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -28,53 +29,55 @@
 
 <div class="container">
 
-    <div class="container-box">
-        <div class="card bg-dark p-4">
-
-            <h2 class="text-center mb-4">📋 Nova Ordem de Serviço</h2>
-
-            <form action="/os/criar" method="post">
-
-                <div class="mb-3">
-                    <label>Cliente</label>
-                    <select class="form-control" name="cliente_id" required>
-                        {% for c in clientes %}
-                        <option value="{{c.id}}">{{c.nome}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label>Veículo</label>
-                    <select class="form-control" name="veiculo_id" required>
-                        {% for v in veiculos %}
-                        <option value="{{v.id}}">{{v.modelo}} - {{v.placa}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label>Mecânico</label>
-                    <select class="form-control" name="mecanico_id" required>
-                        {% for m in mecanicos %}
-                        <option value="{{m.id}}">{{m.nome}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label>Problema Relatado</label>
-                    <textarea class="form-control" name="problema" rows="3" placeholder="Descreva o problema..." required></textarea>
-                </div>
-
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="/os" class="btn btn-secondary">⬅ Voltar</a>
-                    <button type="submit" class="btn btn-success">Criar OS</button>
-                </div>
-
-            </form>
-
+    <div class="top-bar">
+        <h1>📋 Nova OS</h1>
+        <div>
+            <a href="/os" class="btn btn-secondary">⬅ Voltar</a>
         </div>
+    </div>
+
+    <div class="card bg-dark p-4 mt-4">
+
+        <form method="POST" action="/os/criar">
+
+            <div class="mb-3">
+                <label>Cliente</label>
+                <select name="cliente_id" class="form-control">
+                    {% for c in clientes %}
+                        <option value="{{c.id}}">{{c.nome}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Veículo</label>
+                <select name="veiculo_id" class="form-control">
+                    {% for v in veiculos %}
+                        <option value="{{v.id}}">
+                            {{v.modelo}} - {{v.placa}}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Mecânico</label>
+                <select name="mecanico_id" class="form-control">
+                    {% for m in mecanicos %}
+                        <option value="{{m.id}}">{{m.nome}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Problema relatado</label>
+                <textarea name="problema_relatado" class="form-control" rows="3"></textarea>
+            </div>
+
+            <button class="btn btn-primary w-100">🚀 Criar OS</button>
+
+        </form>
+
     </div>
 
 </div>

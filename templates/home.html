@@ -4,29 +4,56 @@
     <meta charset="UTF-8">
     <title>Sistema de Oficina</title>
     
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
+            background: linear-gradient(135deg, #0f172a, #020617);
             color: white;
+        }
+
+        .header {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .header h1 {
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #94a3b8;
         }
 
         .card {
             border: none;
-            border-radius: 15px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
             transition: 0.3s;
         }
 
         .card:hover {
-            transform: scale(1.05);
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.1);
         }
 
-        .title {
-            margin-top: 40px;
-            text-align: center;
-            font-weight: bold;
+        .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-weight: 600;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .grid {
+            margin-top: 50px;
         }
     </style>
 </head>
@@ -35,47 +62,59 @@
 
 <div class="container">
 
-    <h1 class="title">🚗 Sistema de Oficina</h1>
-    <p class="text-center">Gerencie tudo em um só lugar</p>
+    <div class="header">
+        <h1>🚗 Sistema de Oficina</h1>
+        <p>Painel de controle da sua oficina</p>
+    </div>
 
-    <div class="row mt-5 g-4">
+    <div class="row grid g-4">
 
         <div class="col-md-4">
-            <a href="/clientes" class="text-decoration-none">
-                <div class="card bg-primary text-center p-4">
-                    <h3>👤 Clientes</h3>
+            <a href="/clientes">
+                <div class="card text-center p-4">
+                    <div class="icon">👤</div>
+                    <h5 class="card-title">Clientes</h5>
+                    <p class="text-secondary">Gerenciar clientes</p>
                 </div>
             </a>
         </div>
 
         <div class="col-md-4">
-            <a href="/mecanicos" class="text-decoration-none">
-                <div class="card bg-success text-center p-4">
-                    <h3>🔧 Mecânicos</h3>
+            <a href="/mecanicos">
+                <div class="card text-center p-4">
+                    <div class="icon">🔧</div>
+                    <h5 class="card-title">Mecânicos</h5>
+                    <p class="text-secondary">Equipe da oficina</p>
                 </div>
             </a>
         </div>
 
         <div class="col-md-4">
-            <a href="/pecas" class="text-decoration-none">
-                <div class="card bg-warning text-dark text-center p-4">
-                    <h3>📦 Peças</h3>
+            <a href="/pecas">
+                <div class="card text-center p-4">
+                    <div class="icon">📦</div>
+                    <h5 class="card-title">Peças</h5>
+                    <p class="text-secondary">Controle de estoque</p>
                 </div>
             </a>
         </div>
 
         <div class="col-md-6">
-            <a href="/os" class="text-decoration-none">
-                <div class="card bg-danger text-center p-4">
-                    <h3>📋 Ordens de Serviço</h3>
+            <a href="/os">
+                <div class="card text-center p-4">
+                    <div class="icon">📋</div>
+                    <h5 class="card-title">Ordens de Serviço</h5>
+                    <p class="text-secondary">Gerenciar serviços</p>
                 </div>
             </a>
         </div>
 
         <div class="col-md-6">
-            <a href="/os/nova" class="text-decoration-none">
-                <div class="card bg-info text-dark text-center p-4">
-                    <h3>➕ Nova OS</h3>
+            <a href="/os/nova">
+                <div class="card text-center p-4">
+                    <div class="icon">➕</div>
+                    <h5 class="card-title">Nova OS</h5>
+                    <p class="text-secondary">Abrir nova ordem</p>
                 </div>
             </a>
         </div>

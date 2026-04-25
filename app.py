@@ -318,7 +318,7 @@ def criar_os():
     cliente_id = request.form["cliente_id"]
     veiculo_id = request.form["veiculo_id"]
     mecanico_id = request.form["mecanico_id"]
-    problema = request.form["problema"]
+    problema = request.form["problema_relatado"]
 
     conn = conectar()
     cursor = conn.cursor()
@@ -412,6 +412,24 @@ def add_servico(id):
     conn.commit()
     conn.close()
     return redirect(f"/os/{id}")
+
+from datetime import datetime
+
+@app.route("/os/finalizar/<int:id>")
+def finalizar_os(id):
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE ordens_servico
+        SET status = 'CONCLUIDA',
+            data_conclusao = ?
+        WHERE id = ?
+    """, (datetime.now(), id))
+
+    conn.commit()
+
+    return redirect("/os")
 
 
 @app.route("/relatorios/os-abertas")

@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS ordens_servico (
     status TEXT DEFAULT 'ABERTA',
     problema_relatado TEXT,
     data_abertura DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_conclusao DATETIME,
 
     FOREIGN KEY (cliente_id) REFERENCES clientes(id),
     FOREIGN KEY (veiculo_id) REFERENCES veiculos(id),
